@@ -3,14 +3,10 @@ In order to satrt using it, provision some Linux node on OCI and run follow comm
 
 1) `yum install -y git docker-engine`
 
-2)  `wget https://packagecloud.io/github/git-lfs/packages/el/7/git-lfs-2.11.0-1.el7.x86_64.rpm/download -O git-lfs-2.11.0-1.el7.x86_64.rpm`
+2) `git clone https://github.com/filanovskiy/docker-zeppelin-bds`
 
-3) `rpm -Uhv git-lfs-2.11.0-1.el7.x86_64.rpm`
- 
-4) `git clone https://github.com/filanovskiy/docker-zeppelin-bds`
+3) `cd docker-zeppelin-bds`
 
-5) `cd docker-zeppelin-bds`
+4) `sudo service docker start`
 
-6) `sudo service docker start`
-
-7) `docker build .`
+5) `docker build .`
