@@ -1,0 +1,60 @@
+R_LIBS_USER=/usr/lib64/R/library
+# Need Java Home to point to JDK 1.8 supported by Cloduera and OML4Spark
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre
+# Optional Settings to skip verification of HDFS and Map Reduce functionality.
+# Recommended to be set to 0 (default is 1 if not set) after the configuration
+# has been successfull to speed up initialization.
+# Optionally ignore future checks so ORAAH can load faster
+ORCH_HDFS_CHECK=0
+ORCH_MAPRED_CHECK=0
+# For BDS, need to use ORCH_HAL_VERSION
+ORCH_HAL_VERSION=4.2
+############### HOME DIRs#################
+#=====Set by BDA environment======
+R_HOME=/usr/lib64/R
+#=====Set by BDA environment======
+HADOOP_HOME=/opt/cloudera/parcels/CDH/lib/hadoop
+HIVE_HOME=/opt/cloudera/parcels/CDH/lib/hive
+#=====if not Set, BDA environment set to /opt/cloudera/parcels/CDH/lib/hadoop-0.20-mapreduce======
+HADOOP_MAPRED_HOME=/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce
+ORCH_HADOOP_HOME=/opt/cloudera/parcels/CDH
+#=====if not Set, BDA environment set to /opt/cloudera/parcels/CDH/lib/sqoop======
+SQOOP_HOME=/opt/cloudera/parcels/CDH/lib/sqoop
+PIG_HOME=/opt/cloudera/parcels/CDH/lib/pig
+IMPALA_HOME=/opt/cloudera/parcels/CDH/lib/impala
+YARN_HOME=/opt/cloudera/parcels/CDH/lib/hadoop-yarn
+# Spark 2.4.0 for CDH 6.2
+SPARK_HOME=/opt/cloudera/parcels/CDH/lib/spark
+# OPTIONAL: pointers to folders for different Oracle Big Data Appliance or
+# Oracle Big Data Connectors and Oracle NoSQL components. Depending on the
+# folders the products are installed.
+#=====Set by BDA environment======
+# OLH_HOME=/opt/oracle/oraloader-3.9.0-h2
+#=====Set by BDA environment======
+# KVHOME=/opt/oracle/kv-ee
+#=====Set by BDA environment======
+# OSCH_HOME=/opt/oracle/orahdfs-3.8.0
+#=====Not Set by BDA environment======
+# COPY2BDA_HOME=/opt/oracle/bd_cell
+########## CONF DIRs#############
+HIVE_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hive/conf
+HADOOP_CONF_DIR=/etc/hadoop/conf
+SPARK_CONF_DIR=/etc/spark/conf
+# Need to be manually copied into the Folder first
+IMPALA_JAR=/opt/impalajdbcdriver
+LD_LIBRARY_PATH=/usr/lib64/R/lib:/usr/lib64/R/library/rJava:/usr/java/latest/jre/lib/amd64/server:/opt/cloudera/parcels/CDH/lib/hadoop/lib/native
+ORCH_STREAMING_LIB=${ORCH_HADOOP_HOME}/lib/hadoop-mapreduce/hadoop-streaming.jar
+HADOOP_CLASSPATH=${HIVE_CONF_DIR}:${ORCH_HADOOP_HOME}/lib/hive-hcatalog/share/hcatalog/hive-hcatalog-core.jar
+PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:${JAVA_HOME}/bin:${ORCH_HADOOP_HOME}:${ORCH_STREAMING_LIB}:${SQOOP_HOME}:${SPARK_HOME}:${HADOOP_HOME}
+#values like ${ORCH_HADOOP_HOME}/lib/hadoop/client/htrace-core*.jar are expanded by BDA Rprofile.site
+########## ORAAH 2.8.2 CLASSPATH AND MPI CONFIG ##########
+# NEW Spark Configuration requirement for Spark 2.x
+HADOOP_JARS=${HADOOP_HOME}/client/htrace-core4.jar:${HADOOP_HOME}/hadoop-common.jar:${HADOOP_HOME}/hadoop-common-tests.jar:${HADOOP_HOME}/hadoop-auth.jar:${ORCH_HADOOP_HOME}/lib/hadoop-hdfs/hadoop-hdfs.jar:${HADOOP_HOME}/lib/slf4j-log4j12.jar:${HADOOP_HOME}/client/slf4j-api.jar:${HADOOP_HOME}/client/log4j.jar:${HADOOP_HOME}/client/guava.jar:${HADOOP_HOME}/client/commons-collections.jar:${HADOOP_HOME}/client/commons-configuration2.jar:${HADOOP_HOME}/client/commons-lang.jar:${HADOOP_HOME}/client/commons-cli.jar:${HADOOP_HOME}/client/commons-logging.jar:${HADOOP_HOME}/client/commons-io.jar:${HADOOP_HOME}/client/protobuf-java.jar:${HADOOP_HOME}/client/snappy-java.jar:${HADOOP_HOME}/client/hadoop-mapreduce-client-common.jar:${ORCH_HADOOP_HOME}/lib/hadoop-mapreduce/hadoop-mapreduce-client-app.jar:${HADOOP_HOME}/client/hadoop-mapreduce-client-core.jar:${ORCH_HADOOP_HOME}/lib/hadoop-mapreduce/hadoop-mapreduce-client-shuffle.jar:${HADOOP_HOME}/client/hadoop-mapreduce-client-jobclient.jar
+# Using Spark newer releases
+# ORCH_HADOOP_JARS=${ORCH_HADOOP_HOME}/lib/hadoop-hdfs/hadoop-hdfs.jar:${ORCH_HADOOP_HOME}/lib/hadoop-yarn/hadoop-yarn-server-web-proxy.jar:${ORCH_HADOOP_HOME}/lib/hadoop/client/jersey-core.jar:${ORCH_HADOOP_HOME}/lib/hadoop/lib/jersey-server*.jar:${ORCH_HADOOP_HOME}/lib/hadoop/lib/avro.jar:${ORCH_HADOOP_HOME}/lib/hadoop/parquet-hadoop.jar:${ORCH_HADOOP_HOME}/lib/hadoop/parquet-jackson.jar:${ORCH_HADOOP_HOME}/lib/hadoop/parquet-common.jar:${ORCH_HADOOP_HOME}/lib/hadoop/parquet-encoding.jar:${ORCH_HADOOP_HOME}/lib/hadoop/parquet-format.jar:${ORCH_HADOOP_HOME}/lib/hadoop/parquet-column.jar
+​SPARK2_JARS=${SPARK_HOME}/jars/spark-catalyst*.jar:${SPARK_HOME}/jars/spark-core*.jar:${SPARK_HOME}/jars/spark-kvstore*.jar:${SPARK_HOME}/jars/spark-lineage*.jar:${SPARK_HOME}/jars/spark-launcher*.jar:${SPARK_HOME}/jars/spark-mllib*.jar:${SPARK_HOME}/jars/spark-network-common*.jar:${SPARK_HOME}/jars/spark-network-shuffle*.jar:${SPARK_HOME}/jars/spark-repl*.jar:${SPARK_HOME}/jars/spark-sql*.jar:${SPARK_HOME}/jars/spark-sketch*.jar:${SPARK_HOME}/jars/spark-yarn*.jar:${SPARK_HOME}/jars/spark-tags*.jar:${SPARK_HOME}/jars/spark-unsafe*.jar:${SPARK_HOME}/jars/spark-hive*.jar:${SPARK_HOME}/jars/scala-*.jar:${SPARK_HOME}/jars/jackson-annotations*.jar:${SPARK_HOME}/jars/jackson-core*.jar:${SPARK_HOME}/jars/jackson-databind*.jar:${SPARK_HOME}/jars/jersey-server*.jar:${SPARK_HOME}/jars/avro.jar:${SPARK_HOME}/jars/commons-lang3*.jar:${SPARK_HOME}/jars/netty*.jar:${SPARK_HOME}/jars/kryo*.jar:${SPARK_HOME}/jars/chill*.jar:${SPARK_HOME}/jars/metrics*.jar:${SPARK_HOME}/jars/json4s*.jar:${SPARK_HOME}/jars/*servlet*.jar:${ORCH_HADOOP_HOME}/lib/parquet/parquet-avro.jar:${SPARK_HOME}/jars/parquet*.jar:${ORCH_HADOOP_HOME}/lib/parquet/parquet-hadoop-bundle.jar:${SPARK_HOME}/jars/jackson-module-scala*.jar:${SPARK_HOME}/jars/jackson-module-paranamer*.jar:${SPARK_HOME}/jars/paranamer*.jar:${SPARK_HOME}/jars/lz4*.jar:${SPARK_HOME}/jars/objenesis*.jar:${SPARK_HOME}/jars/minlog*.jar:${SPARK_HOME}/jars/RoaringBitmap*.jar:${SPARK_HOME}/jars/xbean*.jar:${SPARK_HOME}/jars/janino*.jar:${SPARK_HOME}/jars/antlr4-runtime*.jar:${SPARK_HOME}/jars/commons-math*.jar:${SPARK_HOME}/jars/jul-to-slf4j*.jar:${SPARK_HOME}/jars/breeze*.jar:${SPARK_HOME}/jars/commons-compiler*.jar:${SPARK_HOME}/jars/core*.jar:${SPARK_HOME}/jars/arpack*.jar:${SPARK_HOME}/jars/spire*.jar:${SPARK_HOME}/jars/hadoop-hdfs*.jar:${SPARK_HOME}/jars/hadoop-yarn-*.jar:${SPARK_HOME}/jars/zstd-*.jar
+HIVE_JARS=${HIVE_HOME}/lib/hive-jdbc.jar:${HIVE_HOME}/jdbc/hive-jdbc*.jar:${HIVE_HOME}/lib/hive-exec.jar:${HIVE_HOME}/lib/hive-service.jar:${HIVE_HOME}/lib/libfb*.jar:${HIVE_HOME}/lib/libthrift*.jar:${HIVE_HOME}/lib/log4j-1.2*.jar:${HIVE_HOME}/lib/zookeeper.jar:${HIVE_HOME}/lib/httpclient*.jar:${HIVE_HOME}/lib/httpcore*.jar
+​CLASSPATH=${CLASSPATH}:${SPARK_CONF_DIR}:${HADOOP_CONF_DIR}:${HIVE_CONF_DIR}:${HADOOP_JARS}:${SPARK2_JARS}:${HIVE_JARS}:${IMPALA_JAR}
+SPARK_DIST_CLASSPATH=${SPARK_CONF_DIR}:${HADOOP_CONF_DIR}:${HIVE_CONF_DIR}:${HADOOP_JARS}:${SPARK2_JARS}:${HIVE_JARS}:${IMPALA_JAR}
+​ORCH_MPI_LIBS=/usr/lib64/R/lib/mpich33a2/lib
+ORCH_MPI_MPIEXEC=/usr/lib64/R/lib/mpich33a2/bin/mpiexec
