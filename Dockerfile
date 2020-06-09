@@ -52,7 +52,9 @@ WORKDIR $HOME
 ENV ZEPPELIN_HOME=$HOME/zeppelin-$ZEPPELIN_VERSION
 
 # Copy and untar the Zeppelin sources
-ADD ./target/zeppelin-$ZEPPELIN_VERSION.tgz $HOME
+RUN wget https://downloads.apache.org/zeppelin/zeppelin-0.9.0-preview1/zeppelin-0.9.0-preview1-bin-all.tgz -O zeppelin-0.9.0-preview1-bin-all.tgz 
+RUN tar -zxf zeppelin-0.9.0-preview1-bin-all.tgz
+RUN rm -rf zeppelin-0.9.0-preview1-bin-all.tgz
 
 RUN groupadd -g $GROUP_ID $GROUP_NAME \
     && useradd -g $GROUP_NAME -u $USER_ID $USER_NAME \
