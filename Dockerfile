@@ -48,17 +48,16 @@ ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre/ 
     ZEPPELIN_ADDR="0.0.0.0" \    
     ZEPPELIN_VERSION=0.9.0-preview1-bin-all 
 
+RUN groupadd -g $GROUP_ID $GROUP_NAME \
+    && useradd -g $GROUP_NAME -u $USER_ID $USER_NAME \
+    && mkdir -p $HOME
+
 WORKDIR $HOME
 ENV ZEPPELIN_HOME=$HOME/zeppelin-$ZEPPELIN_VERSION
-
 # Copy and untar the Zeppelin sources
 RUN wget https://downloads.apache.org/zeppelin/zeppelin-0.9.0-preview1/zeppelin-0.9.0-preview1-bin-all.tgz -O zeppelin-0.9.0-preview1-bin-all.tgz 
 RUN tar -zxf zeppelin-0.9.0-preview1-bin-all.tgz
 RUN rm -rf zeppelin-0.9.0-preview1-bin-all.tgz
-
-RUN groupadd -g $GROUP_ID $GROUP_NAME \
-    && useradd -g $GROUP_NAME -u $USER_ID $USER_NAME \
-    && mkdir -p $HOME
 
 # Change ownership of the Zeppelin home to oml:oml
 # Grant RWX privileges to the OML group
@@ -79,6 +78,7 @@ RUN R CMD javareconf
 RUN python3 -m pip install --upgrade pip setuptools
 RUN python3 -m pip install "py4j<=0.10.7" "holoviews[recommended]" numpy tensorflow pandas scikit-learn jupyter grpcio protobuf matplotlib altair bokeh bkzep ggplot hvplot keras plotnine seaborn utils vega_datasets
 RUN python3 -m pip install pyspark
+
 RUN sudo ln -s $ZEPPELIN_HOME/interpreter/python/python/mpl_config.py /usr/local/lib/python3.6/site-packages/mpl_config.py
 RUN sudo ln -s $ZEPPELIN_HOME/interpreter/python/python/mpl_config.py /usr/local/lib/python3.6/site-packages/pyspark/mpl_config.py
 RUN echo "backend : Agg" >> /usr/local/lib64/python3.6/site-packages/matplotlib/mpl-data/matplotlibrc
@@ -106,4 +106,3 @@ RUN echo welcome1 | passwd bds --stdin
 WORKDIR $ZEPPELIN_HOME
 EXPOSE $ZEPPELIN_PORT
 ENTRYPOINT ["./startup.sh"]
-
